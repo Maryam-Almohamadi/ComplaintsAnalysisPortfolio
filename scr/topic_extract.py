@@ -3,8 +3,8 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 
-# Funection to extract topics using "LDA" or "NMF"
-def t_extract(texts, technique="LDA", topics_num=5): # number of topics is set to 5 for comprehension and simiplicty
+# Function to extract topics using "LDA" or "NMF"
+def t_extract(texts, technique="LDA", topics_num=5): # number of topics is set to 5 for comprehension and simplicity
     vectorizer = TfidfVectorizer(max_features=1000, stop_words='english')  # TF-IDF convert input text to numerical matrix
     matrix = vectorizer.fit_transform(texts)
 
@@ -18,17 +18,16 @@ def t_extract(texts, technique="LDA", topics_num=5): # number of topics is set t
 
 # Function that calculate the coherence score of the topics based on cosine similarity
 def compute_coherence(topics, vectorizer, top_words_num=20):
-    # Function is passed topics (numpy numerical vector), fitted CountVectorizer or TfidfVectorizer, number of top words
+    # Function is passed topics (numpy numerical vector), fitted CountVectorizer or TfidfVectorizer, and number of top words
    
     vocab = vectorizer.get_feature_names_out()
    
     t_words = [vocab[t.argsort()[-top_words_num:][::-1]] for t in topics] 
-    # This sorts topic's word distributions then selects the important words,
-    # before reversing them using [::-1] to obtain descending importance rankings.
+    # This sorts topic's word distributions then selects the important words, before reversing them using [::-1] to obtain descending importance rankings.
 
     # Binary vectors for cosine similarity
     vectors_b = [
-        np.isin(vocab, words).astype(int) for words in t_words # each top word is marked 1 and the rest is 0
+        np.isin(vocab, words).astype(int) for words in t_words # each top word is marked 1 and the rest of the words is 0
     ]
 
     # calculate cosine similarity between each topic vectors pair
