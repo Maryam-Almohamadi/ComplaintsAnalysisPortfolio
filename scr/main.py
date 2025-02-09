@@ -15,11 +15,11 @@ frame = pd.read_csv(
 sample_frame = frame.dropna().sample(n=200, random_state=42) # sampling 200 rows of the chosen column and handling missing values
 sample_frame["cleaning"] = sample_frame["Consumer complaint narrative"].astype(str).apply(cleaning) # cleaning column's text
 
-# Using the vectorizer method & passing arguments for each technique (Tf-IDF, BoW) respectivly.
+# Using the vectorization (vectorizer) method & passing arguments for each technique (Tf-IDF, BoW) respectivly
 matrix_tfidf, vectorize_tfidf = vectorizer(sample_frame["cleaning"], technique="TF-IDF")
 matrix_bow, vectorize_bow = vectorizer(sample_frame["cleaning"], technique="BoW")
 
-# Using the topic extraction (t_extract) method & passing arguments for each technique (LDA, NMF) respectivly.
+# Using the topic extraction (t_extract) method & passing arguments for each technique (LDA, NMF) respectivly
 lda_model, lda_topics, lda_coherence = t_extract(sample_frame["cleaning"], technique="LDA")
 nmf_model, nmf_topics, nmf_coherence = t_extract(sample_frame["cleaning"], technique="NMF")
 
@@ -27,7 +27,7 @@ nmf_model, nmf_topics, nmf_coherence = t_extract(sample_frame["cleaning"], techn
 freq_words(vectorize_tfidf, matrix_tfidf, title="Most Frequent Words (TF-IDF)") # plotting graph showing word weights based on TF-IDF
 freq_words(vectorize_bow, matrix_bow, title="Most Frequent Words (BoW)") # plotting graph showing word numerical representation based on BoW
 vectors_comparison(vectorize_tfidf, matrix_tfidf, vectorize_bow, matrix_bow) # this graph comapres BoW & TF-IDF techniques
-coherence_plot(["LDA", "NMF"], [lda_coherence, nmf_coherence]) # plotting coherence score using both NMF & LDA for comparison
+coherence_plot(["LDA", "NMF"], [lda_coherence, nmf_coherence]) # plotting coherence score for both NMF & LDA for comparison
 
 # Function that convert LDA & NMF numerical output into human-readable top-words for each top 10 topics
 def print_t(topics, vectorizer, top_n=10):
@@ -37,7 +37,7 @@ def print_t(topics, vectorizer, top_n=10):
         top_words = [vocab[i] for i in top_words_ind] 
         print(f"Topic {IDX}: {top_words}") 
 
-# Displaying topics for both models
+# Displaying topics and their top words for both models in the terminal
 print("\nLDA Topics:")
 print_t(lda_topics, vectorize_tfidf)
 
