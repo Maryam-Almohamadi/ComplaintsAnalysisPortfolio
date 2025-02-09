@@ -24,7 +24,7 @@ def coherence_plot(models, coherence_scores):
 
 # Plots a graph comparing BoW and TF-IDF in terms of word frequncy for random words
 def vectors_comparison(vectorizer_tfidf, matrix_tfidf, vectorizer_bow, matrix_bow, top_n=20):
-    words_tfidf = np.asarray(matrix_tfidf.sum(axis=0)).flatten() # TF-IDF gives the weighted importance value.
+    words_tfidf = np.asarray(matrix_tfidf.sum(axis=0)).flatten() # TF-IDF gives the weighted importance value
     words_bow = np.asarray(matrix_bow.sum(axis=0)).flatten() # BoW gives the basic word occurrence numbers
 
     # selects words that exist in both vocabularies.
